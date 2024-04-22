@@ -41,19 +41,19 @@
         <div class="HomeBoxBody">
           <div class="HomeBoxBodyItem">
             <div class="HomeBoxBodyItemHead">新衣数量</div>
-            <div class="HomeBoxBodyItemFoot">999</div>
+            <div class="HomeBoxBodyItemFoot">{{ newClothes }}</div>
           </div>
           <div class="HomeBoxBodyItem">
             <div class="HomeBoxBodyItemHead">审核中</div>
-            <div class="HomeBoxBodyItemFoot">188</div>
+            <div class="HomeBoxBodyItemFoot">{{ newClothesCheck }}</div>
           </div>
           <div class="HomeBoxBodyItem">
             <div class="HomeBoxBodyItemHead">裁缝数量</div>
-            <div class="HomeBoxBodyItemFoot">20</div>
+            <div class="HomeBoxBodyItemFoot">{{ newClothesTailor }}</div>
           </div>
           <div class="HomeBoxBodyItem">
             <div class="HomeBoxBodyItemHead">工匠占比</div>
-            <div class="HomeBoxBodyItemFoot">10%</div>
+            <div class="HomeBoxBodyItemFoot">{{ (newClothesCraftsman / newClothesTailor) * 100 }}%</div>
           </div>
         </div>
       </template>
@@ -103,6 +103,11 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import {
+  getClotheCount,
+  getClotheCheckCount,
+  getUserCount
+} from '../api/api';
 
 import Box from '@/components/Box.vue';
 @Options({
@@ -111,11 +116,26 @@ import Box from '@/components/Box.vue';
   },
 })
 export default class HomeView extends Vue {
+  newClothes = 0;
+  newClothesCheck = 0;
+  newClothesTailor = 0;
+  newClothesCraftsman = 0;
+
   data(): object {
     return {
-
-    }
+      newClothes: 0,
+      newClothesCheck: 0,
+      newClothesTailor: 0,
+      newClothesCraftsman: 0,
+    };
+  
   }
 
+  async mounted() {
+    this.newClothes = (await getClotheCount()).data.data;
+    this.newClothesCheck = await (await getClotheCheckCount()).data.data;
+    this.newClothesTailor = await (await getUserCount()).data.data.count;
+    this.newClothesCraftsman = (await getUserCount()).data.data.admin_count;
+  }
 }
 </script>

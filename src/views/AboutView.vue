@@ -18,7 +18,9 @@
         }
     }
 }
-.LiveMsg {
+
+.LiveMsg,
+.WebMsg {
     .Box-Body {
         text-align: left;
 
@@ -40,9 +42,11 @@
                 0% {
                     color: #1989fa;
                 }
+
                 50% {
                     color: #ff976a;
                 }
+
                 100% {
                     color: #1989fa;
                 }
@@ -114,6 +118,31 @@
                 <div>
                     <div class="title">桥洞快递领取</div>
                     已经填过地址的舰长在舰期间桥洞礼物都会顺之前的地址发放，如果需要更改地址或者第一次填写地址的舰长可以在舰长群（上舰的大人注意私信）里填写当月地址收集表哦。如果上个月顺原地址寄出的礼物无人领取或者退回的话会暂停舰礼的发放，舰长大人可以私戳猫猫激活重发。
+                </div>
+            </template>
+        </box>
+        <box class="WebMsg">
+            <template #head>
+                <div class="AboutBoxHeadLeft">
+                    网站信息
+                </div>
+            </template>
+            <template #body>
+                <div>
+                    本网站由凛喵的一小片天制作并提供技术支持，定位为粉丝专页，与凛喵konn以及相关企划、公司无关联，本站用到的所有形象、素材资源的版权均归属于相应版权方
+                </div>
+                <div>
+                    <div class="title">建站初衷</div>
+                    本站建立的初衷是为了方便粉丝查看凛喵konn的相关信息，包括直播信息、活动信息、粉丝福利、新衣等，同时也是为了提供一个交流的平台，让粉丝们可以更好地了解凛喵konn
+                </div>
+                <div>
+                    <div class="title">其他说明</div>
+                    <div>
+                        本站技术使用Vue3 + TypeScript + Vite2 + Vant3 + SCSS + Axios + Vuex + Vue Router + Eslint + Prettier
+                    </div>
+                    <div>
+                        外部UI使用<a href="https://vant-contrib.gitee.io/vant/#/zh-CN/home">Vant4</a>, <a href="https://element-plus.org/zh-CN/component/overview.html">Element Plus</a>,<a href="http://img.immoral.top/">图床</a>使用自行搭建的简单图床服务
+                    </div>
                 </div>
             </template>
         </box>

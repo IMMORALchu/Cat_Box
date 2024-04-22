@@ -188,7 +188,7 @@ export default class MakingClotheView extends Vue {
                 image: file.file
             });
             this.dynamicWidth(this.$store.state.windowWidth, 5.2);
-            this.imgList.push(res.data.url);
+            this.imgList.push(res.url);
             loading.close();
         } else {
             // 循环上传
@@ -198,7 +198,7 @@ export default class MakingClotheView extends Vue {
                     image: file[i].file
                 });
                 this.dynamicWidth(this.$store.state.windowWidth, 5.2);
-                this.imgList.push(res.data.url);
+                this.imgList.push(res.url);
             }
             loading.close();
         }

@@ -65,12 +65,17 @@ class HttpRequest {
     // 请求拦截器
     instance.interceptors.request.use((config) => {
       // 上传接口单独处理
-      if (config.url != 'https://www.imgtp.com/api/upload') {
+      if (config.url != 'http://img.immoral.top/api/index.php') {
         loading = ElLoading.service({
           lock: true,
           text: 'Loading',
           background: 'rgba(0, 0, 0, 0.7)',
         })
+      } else {
+        config.data = {
+          ...config.data,
+          token: '1c17b11693cb5ec63859b091c5b9c1b2'
+        }
       }
 
       // 一般会请求拦截里面加token，用于后端的验证
@@ -89,7 +94,7 @@ class HttpRequest {
     instance.interceptors.response.use(
       (res) => {
         // console.log("🚀 ~ file: axios.ts:89 ~ HttpRequest ~ setInterceptors ~ res:", res)
-        if (res.config.url != 'https://www.imgtp.com/api/upload') {
+        if (res.config.url != 'http://img.immoral.top/api/index.php') {
           loading.close()
         }
         let { status, data } = res
@@ -105,7 +110,7 @@ class HttpRequest {
           }
         }
         else {
-          if (res.config.url != 'https://www.imgtp.com/api/upload') {
+          if (res.config.url != 'http://img.immoral.top/api/index.php') {
             ElMessage.info(data || '请求失败')
           }
           return data

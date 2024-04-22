@@ -115,7 +115,8 @@ export default class StatisticsView extends Vue {
         await getClotheList({
             type: 0,
             page: 1,
-            size: 9999
+            size: 9999,
+            id: 0
         }).then((res: any) => {
             this.ClotheList = res.data.data;
         });
@@ -152,12 +153,12 @@ export default class StatisticsView extends Vue {
         // 判断是否为pc端
         if (this.$store.state.windowWidth > 900) {
             this.imgCount = 5;
-        } else if (this.screenWidth > 768) {
-            this.$store.state.windowWidth = 4;
-        } else if (this.screenWidth > 650) {
-            this.$store.state.windowWidth = 3;
+        } else if (this.$store.state.windowWidth > 768) {
+            this.imgCount = 4;
+        } else if (this.$store.state.windowWidth > 650) {
+            this.imgCount = 3;
         } else {
-            this.$store.state.windowWidth = 2;
+            this.imgCount = 2;
         }
     }
     // 点击预览

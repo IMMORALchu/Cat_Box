@@ -97,6 +97,8 @@ export default class LoginView extends Vue {
                     ElMessage.success('登录成功');
                     // 把用户信息存储到sessionStorage
                     sessionStorage.setItem('userInfo', JSON.stringify(res.data.data));
+                    // 本地存储
+                    localStorage.setItem('userInfo', JSON.stringify(res.data.data));
                     // 登录成功后跳转到首页
                     this.$router.push('/');
                 } else {

@@ -129,7 +129,7 @@ export default class Tabbar extends Vue {
         // { text: '猫的衣柜', value: '/more/NewClothe' },
         { text: '上传新衣', value: '/more/MakingClothe' },
         { text: '用户信息', value: '/more/My' },
-        { text: '友情链接', value: '/more/Blogroll' },
+        // { text: '友情链接', value: '/more/Blogroll' },
         { text: '退出登录', value: '/more/Login' },
     ];
     public onSelect(action: any) {

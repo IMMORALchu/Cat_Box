@@ -23,7 +23,10 @@ import {
     GridItem,
     Image as VanImage,
     Lazyload,
-    Uploader
+    Uploader,
+    Field,
+    CellGroup,
+    Switch 
 } from 'vant';
 import 'vant/lib/index.css';
 
@@ -44,4 +47,7 @@ createApp(App)
 .use(VanImage)
 .use(Lazyload)
 .use(Uploader)
+.use(Field)
+.use(CellGroup)
+.use(Switch)
 .mount('#app')
