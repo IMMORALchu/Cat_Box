@@ -8,11 +8,23 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.11",
+    "@fullcalendar/daygrid": "^6.1.11",
+    "@fullcalendar/interaction": "^6.1.11",
+    "@fullcalendar/list": "^6.1.11",
+    "@fullcalendar/multimonth": "^6.1.11",
+    "@fullcalendar/timegrid": "^6.1.11",
+    "@fullcalendar/vue": "^6.1.11",
+    "@fullcalendar/vue3": "^6.1.11",
+    "@vant/touch-emulator": "^1.4.0",
+    "axios": "^1.6.8",
     "core-js": "^3.8.3",
+    "element-plus": "^2.6.3",
+    "vant": "^4.8.10",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0"
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
@@ -43,7 +55,11 @@
     "parserOptions": {
       "ecmaVersion": 2020
     },
-    "rules": {}
+    "rules": {
+      "@typescript-eslint/no-explicit-any": [
+        "off"
+      ]
+    }
   },
   "browserslist": [
     "> 1%",
