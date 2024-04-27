@@ -104,9 +104,7 @@
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import {
-  getClotheCount,
-  getClotheCheckCount,
-  getUserCount
+  getHome
 } from '../api/api';
 
 import Box from '@/components/Box.vue';
@@ -132,10 +130,12 @@ export default class HomeView extends Vue {
   }
 
   async mounted() {
-    this.newClothes = (await getClotheCount()).data.data;
-    this.newClothesCheck = await (await getClotheCheckCount()).data.data;
-    this.newClothesTailor = await (await getUserCount()).data.data.count;
-    this.newClothesCraftsman = (await getUserCount()).data.data.admin_count;
+    await getHome().then((res) => {
+      this.newClothes = res.data.data.data.clothes;
+      this.newClothesCheck = res.data.data.data.clothe_check;
+      this.newClothesTailor = res.data.data.data.user.count;
+      this.newClothesCraftsman = res.data.data.data.user.admin_count;
+    });
   }
 }
 </script>

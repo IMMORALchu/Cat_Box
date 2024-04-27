@@ -4,4 +4,7 @@ export default {
     GetClotheSort: "?s=App.Closet_Sort.GetSortList",
     getClotheCount: "?s=App.Closet_Closet.GetClotheCount",
     getClotheCheckCount: "?s=App.Closet_Closet.GetClotheCheckCount",
+    getClotheCountByCookie: "?s=App.Closet_Closet.GetClotheCountByCookie",
+    postCheckClothe: "?s=App.Closet_Closet.PostCheckClothe",
+    postSubmitCheck: "?s=App.Closet_Closet.PostSubmitCheck",
 };

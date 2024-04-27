@@ -8,6 +8,9 @@ import '@vant/touch-emulator';
 // 引入字体
 import './style/font/font.css'
 
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
 // 引入VANT
 import { 
     Button,
@@ -50,4 +53,5 @@ createApp(App)
 .use(Field)
 .use(CellGroup)
 .use(Switch)
+.use(ElementPlus)
 .mount('#app')

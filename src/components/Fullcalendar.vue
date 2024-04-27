@@ -130,6 +130,7 @@ import {
 })
 export default class Fullcalendar extends Vue {
     scheduleList: any = [];
+    // 根据窗口宽度动态设置宽度
     public dynamicWidth(width: number) {
         var Fb_bottom_content_item_box = document.getElementsByClassName('Fb_bottom_content_item_box') as HTMLCollectionOf<HTMLElement>;
         if (width < 1000) {
@@ -146,6 +147,7 @@ export default class Fullcalendar extends Vue {
         await getSchedule().then((res) => {
             res.data.data.forEach((item: any) => {
                 item.events = JSON.parse(item.events);
+                // 事件类型转换
                 item.events.forEach((itemD: any) => {
                     if (itemD.type === 'rest') {
                         itemD.type = '休息';
@@ -177,6 +179,13 @@ export default class Fullcalendar extends Vue {
                     }
                 });
             });
+
+            // 根据week排序
+            res.data.data.sort((a: any, b: any) => {
+                return a.week - b.week;
+            });
+
+            
             this.scheduleList = res.data.data;
         }).catch((err) => {
             console.log(err);

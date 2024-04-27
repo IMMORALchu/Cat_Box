@@ -17,9 +17,11 @@
         0% {
             box-shadow: 0 0 10px rgb(52 81 130);
         }
+
         50% {
             box-shadow: none;
         }
+
         100% {
             box-shadow: 0 0 10px rgb(52 81 130);
         }
@@ -119,19 +121,15 @@ import { Options, Vue } from 'vue-class-component';
 
     },
     watch: {
-        // 监听路由变化初始化Choose的位置
-        '$route': 'onRouteChange'
+        $route: 'onRouteChange'
     }
 })
 export default class Tabbar extends Vue {
     showPopover = false;
     actions = [
-        // { text: '猫的衣柜', value: '/more/NewClothe' },
         { text: '上传新衣', value: '/more/MakingClothe' },
-        { text: '用户信息', value: '/more/My' },
-        // { text: '友情链接', value: '/more/Blogroll' },
-        { text: '退出登录', value: '/more/Login' },
-    ];
+        { text: '用户信息', value: '/more/My' }
+        ];
     public onSelect(action: any) {
         if (action.value !== '/more/Login') {
             this.$router.push(action.value)
@@ -150,7 +148,6 @@ export default class Tabbar extends Vue {
     }
     // 选择TabbarHeaderItem
     public chooseTab(e: any) {
-
         // 获取对应的TabbarHeaderItem的第一个子元素的offsetLeft
         var left = (document.getElementsByClassName('TabbarHeaderItem')[e].children[0] as HTMLElement).offsetLeft
         // 修改Choose的left值,要有动画效果
@@ -160,6 +157,9 @@ export default class Tabbar extends Vue {
     }
     public mounted() {
         this.onRouteChange(this.$route);
+    }
+
+    public onRouteChange(newRoute: any) {
         // 初始化padding
         var TabbarHeader = document.getElementsByClassName('TabbarHeader')[0] as HTMLElement
         if (this.$store.state.windowWidth > 900) {
@@ -175,9 +175,6 @@ export default class Tabbar extends Vue {
         } else {
             TabbarHeader.style.padding = '0 2rem'
         }
-    }
-
-    public onRouteChange(newRoute: any) {
         // 根据路由初始化Choose的位置
         switch (newRoute.path) {
             case '/':
@@ -201,24 +198,17 @@ export default class Tabbar extends Vue {
     // 监听窗口宽度变化,响应式调整图片数量
     created() {
         this.$store.watch(() => this.$store.state.windowWidth, (newVal) => {
-            // .TabbarHeader间距线性缩短padding
-            var TabbarHeader = document.getElementsByClassName('TabbarHeader')[0] as HTMLElement
-            if (newVal > 900) {
-                TabbarHeader.style.padding = '0 16rem'
-            } else if (newVal > 768) {
-                TabbarHeader.style.padding = '0 10rem'
-            } else if (newVal > 650) {
-                TabbarHeader.style.padding = '0 8rem'
-            } else if (newVal > 480) {
-                TabbarHeader.style.padding = '0 6rem'
-            } else if (newVal > 320) {
-                TabbarHeader.style.padding = '0 4rem'
-            } else {
-                TabbarHeader.style.padding = '0 2rem'
-            }
             this.onRouteChange(this.$route)
-
         })
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo && JSON.parse(userInfo).user_role == 1) {
+            this.actions.push({ text: '帖子审核', value: '/more/PostCheck' })
+            this.actions.push({ text: '日程上传', value: '/more/Schedule' })
+            this.actions.push({ text: '退出登录', value: '/more/Login' })
+        } else {
+            this.actions.push({ text: '退出登录', value: '/more/Login' })
+        }
+        
     }
 }
 </script>

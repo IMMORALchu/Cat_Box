@@ -3,6 +3,7 @@ import Login from './config/Login'
 import Closet from './config/Closet'
 import Without from './config/Without'
 import Schedule from './config/Schedule'
+import Home from './config/Home'
 
 // 登录
 export const postLogin = (options: any) => axios.post(Login.postLogin, options) 
@@ -31,14 +32,26 @@ export const getClotheCount = () => axios.get(Closet.getClotheCount)
 // 获取衣服审核数量
 export const getClotheCheckCount = () => axios.get(Closet.getClotheCheckCount)
 
+// 审核衣服
+export const postCheckClothe = (options: any) => axios.post(Closet.postCheckClothe, options)
+
+// 提交审核
+export const postSubmitCheck = (options: any) => axios.post(Closet.postSubmitCheck, options)
+
+// 获取用户上传数据
+export const getClotheCountByCookie = () => axios.get(Closet.getClotheCountByCookie)
+
 // 获取日程
 export const getSchedule = () => axios.get(Schedule.getSchedule)
 
 // 添加日程
-export const postSchedule = (options: any) => axios.post(Schedule.postSchedule, options)
+export const postSchedule = (options: any) => axios.post(Schedule.postSchedule, options, { 'Content-Type': 'multipart/form-data' })
 
 // 获取用户信息
 export const getUserInfo = () => axios.get(Login.getUserInfo)
 
 // 获取用户数量
 export const getUserCount = () => axios.get(Login.getUserCount)
+
+// 获取主页数据
+export const getHome = () => axios.get(Home.GetHome)

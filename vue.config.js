@@ -2,9 +2,9 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   // 打包路径
-  // publicPath:"./",
-  // outputDir: 'dist',
-  // assetsDir: 'static',
+  assetsDir: 'static',
+  parallel: false,
+  publicPath: '/',
   // 关闭eslint
   lintOnSave: false,
   // 为了解决一个报错 看着难受
@@ -31,7 +31,7 @@ module.exports = defineConfig({
         target: 'http://catapi.com/', // 代理地址
         changeOrigin: true, // 允许跨域
         pathRewrite: {
-          '^/api': '' // 重写路径
+          '^/api': '/' // 重写路径
         }
       }
     }

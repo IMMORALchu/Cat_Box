@@ -7,6 +7,7 @@ import 'element-plus/es/components/loading/style/css'
 import { ElLoading, ElMessage } from 'element-plus'
 
 interface Result<T = any> {
+url(url: any): unknown;
   code: number | string;
   msg: string;
   data: T;
@@ -20,7 +21,7 @@ class HttpRequest {
   timeout: number;
 
   constructor() {
-    this.baseURL = '/api';
+    this.baseURL = process.env.VUE_APP_API_URL;
     this.timeout = 60000
   }
 
@@ -65,7 +66,7 @@ class HttpRequest {
     // 请求拦截器
     instance.interceptors.request.use((config) => {
       // 上传接口单独处理
-      if (config.url != 'http://img.immoral.top/api/index.php') {
+      if (config.url != 'https://img.immoral.top/api/index.php') {
         loading = ElLoading.service({
           lock: true,
           text: 'Loading',
@@ -94,7 +95,7 @@ class HttpRequest {
     instance.interceptors.response.use(
       (res) => {
         // console.log("🚀 ~ file: axios.ts:89 ~ HttpRequest ~ setInterceptors ~ res:", res)
-        if (res.config.url != 'http://img.immoral.top/api/index.php') {
+        if (res.config.url != 'https://img.immoral.top/api/index.php') {
           loading.close()
         }
         let { status, data } = res
@@ -110,7 +111,7 @@ class HttpRequest {
           }
         }
         else {
-          if (res.config.url != 'http://img.immoral.top/api/index.php') {
+          if (res.config.url != 'https://img.immoral.top/api/index.php') {
             ElMessage.info(data || '请求失败')
           }
           return data

@@ -105,6 +105,7 @@
             .BoxBodyItemRightMsg {
                 /* 文字靠左 */
                 text-align: left;
+                line-height: 2rem;
             }
 
             .van-cell__title {
@@ -118,6 +119,7 @@
                 border-bottom: 2px solid #63378c;
             }
         }
+
         .van-collapse-item__content {
             max-width: 60vw;
         }
@@ -169,8 +171,9 @@
                 <template #body>
                     <van-cell-group inset>
                         <!-- 输入任意文本 -->
-                        <van-field v-model="name" label="当前共上传" disabled />
-                        <van-field v-model="name" label="当前待审核" disabled />
+                        <van-field v-model="uploadClothe" label="当前共上传" disabled />
+                        <van-field v-model="checkClothe" label="当前待审核" disabled />
+                        <van-field v-model="notpasscheck" label="当前未通过" disabled />
                     </van-cell-group>
                     <van-collapse v-model="activeNames" class="BoxBodyCollapse">
                         <van-collapse-item :name="index" :title="item['year'] + '年'" v-for="(item, index) in ClotheList"
@@ -182,8 +185,16 @@
                                         :key="indexD">
                                         <div class="BoxBodyItemRightTitle">{{ itemD['day'].replace(/^0/, '') + '号 ' +
                                             itemD['create_time'].split(' ')[1] }}</div>
-                                        <div class="BoxBodyItemRightMsg">
-                                            {{ itemD['title'] }}
+                                        <div style="display: flex; justify-content:space-between;">
+                                            <div class="BoxBodyItemRightMsg">
+                                                {{ itemD['title'] }} -
+                                                {{ itemD['status'] === 0 ? '待审核' : itemD['status'] === 1 ? '已通过' :
+                                                    '未通过' }}
+                                            </div>
+                                            <div class="BoxBodyItemRightBtn">
+                                                <van-button type="primary" size="small" v-if="itemD['status'] == 3"
+                                                    @click="updateCheck(itemD)">提交审核</van-button>
+                                            </div>
                                         </div>
                                         <van-grid :border="false" :column-num="imgCount">
                                             <van-grid-item v-for="(itemI, indexI) in itemD['image_list']" :key="indexI"
@@ -217,7 +228,9 @@ import {
     postUpdate,
     postUploadImg,
     getUserInfo,
-    getClotheList
+    getClotheList,
+    getClotheCountByCookie,
+    postSubmitCheck
 } from '../../api/api';
 @Options({
     components: {
@@ -229,7 +242,9 @@ export default class MyView extends Vue {
     password = '';
     verifyPassword = '';
     tel = '';
-    avatar = '';
+    avatar: any = '';
+    uploadClothe = 0;
+    checkClothe = 0;
     activeNames = [];
     status = true;
     checked = false;
@@ -237,6 +252,7 @@ export default class MyView extends Vue {
     monthActiveNames: any;
     showImg: boolean = false;
     imgCount = 5;
+    notpasscheck = 0;
     data(): object {
         return {
             // 折叠面板激活的面板
@@ -325,6 +341,23 @@ export default class MyView extends Vue {
         loading.close();
     }
 
+    // 提交审核
+    public updateCheck(e: any) {
+
+        postSubmitCheck({
+            id: e.closet_id
+        }).then(res => {
+            if (res.data.code === 0) {
+                ElMessage.success('提交成功');
+                this.getClotheList();
+            } else {
+                ElMessage.error('提交失败');
+            }
+        }).catch(err => {
+            ElMessage.error('提交失败');
+        })
+    }
+
     created(): void {
         // 从本地存储中获取用户信息
         const userInfo = localStorage.getItem('userInfo');
@@ -353,15 +386,8 @@ export default class MyView extends Vue {
         })
     }
 
-    async mounted() {
-        if (this.$store.state.windowWidth <= 600) {
-            var Box = document.getElementsByClassName('Box')[0] as HTMLElement;
-            Box.style.display = 'block';
-        } else {
-            var Box = document.getElementsByClassName('Box')[0] as HTMLElement;
-            Box.style.display = 'flex';
-        }
-        // 获取衣服列表
+    // 获取衣服列表
+    public async getClotheList(): Promise<void> {
         await getClotheList({
             type: 0,
             page: 1,
@@ -370,6 +396,7 @@ export default class MyView extends Vue {
         }).then((res: any) => {
             this.ClotheList = res.data.data;
         });
+
         // JSON解析image_list
         this.ClotheList = this.ClotheList.map((item: any) => {
             item.image_list = JSON.parse(item.image_list);
@@ -399,6 +426,19 @@ export default class MyView extends Vue {
             }
             return prev;
         }, []);
+    }
+
+    async mounted() {
+        if (this.$store.state.windowWidth <= 600) {
+            var Box = document.getElementsByClassName('Box')[0] as HTMLElement;
+            Box.style.display = 'block';
+        } else {
+            var Box = document.getElementsByClassName('Box')[0] as HTMLElement;
+            Box.style.display = 'flex';
+        }
+        // 获取衣服列表
+        this.getClotheList();
+
 
         // 判断是否为pc端
         if (this.$store.state.windowWidth > 900) {
@@ -410,6 +450,12 @@ export default class MyView extends Vue {
         } else {
             this.imgCount = 2;
         }
+
+        await getClotheCountByCookie().then((res: any) => {
+            this.uploadClothe = res.data.data.clothe_count;
+            this.checkClothe = res.data.data.check_count;
+            this.notpasscheck = res.data.data.notpass_count;
+        })
     }
 }
 </script>

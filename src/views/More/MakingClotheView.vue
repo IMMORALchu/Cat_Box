@@ -115,7 +115,7 @@
 </template>
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import { ElSelect, ElOption, ElButton, ElInput, ElLoading, ElMessage } from 'element-plus';
+import { ElLoading, ElMessage } from 'element-plus';
 import 'element-plus/es/components/select/style/css';
 import 'element-plus/es/components/option/style/css';
 import 'element-plus/es/components/button/style/css';
@@ -130,10 +130,6 @@ import {
 @Options({
     components: {
         Box,
-        ElSelect,
-        ElOption,
-        ElButton,
-        ElInput,
         ElLoading
     },
 })

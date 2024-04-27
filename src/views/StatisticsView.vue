@@ -113,7 +113,7 @@ export default class StatisticsView extends Vue {
     public async mounted() {
         // 获取衣服列表
         await getClotheList({
-            type: 0,
+            type: 1,
             page: 1,
             size: 9999,
             id: 0

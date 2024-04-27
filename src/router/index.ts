@@ -50,15 +50,6 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/more/NewClothe',
-    name: 'newClothe',
-    component: () => import('../views/More/NewClotheView.vue'),
-    meta: {
-      TabbarShow: true,
-      FooterShow: true
-    }
-  },
-  {
     path: '/more/MakingClothe',
     name: 'MakingClotheView',
     component: () => import('../views/More/MakingClotheView.vue'),
@@ -77,18 +68,29 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
-    path: '/more/Blogroll',
-    name: 'BlogrollView',
-    component: () => import('../views/More/BlogrollView.vue'),
+    path: '/more/PostCheck',
+    name: 'PostCheckView',
+    component: () => import('../views/More/PostCheckView.vue'),
     meta: {
       TabbarShow: true,
       FooterShow: true
     }
   },
+  {
+    path: '/more/Schedule',
+    name: 'ScheduleView',
+    component: () => import('../views/More/ScheduleView.vue'),
+    meta: {
+      TabbarShow: true,
+      FooterShow: true
+    }
+  }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  // history: createWebHistory(process.env.BASE_URL),
+  // 用hash模式
+  history: createWebHistory(),
   routes
 })
 
